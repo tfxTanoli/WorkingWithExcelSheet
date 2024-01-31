@@ -1,4 +1,5 @@
 import openpyxl as xl
+from openpyxl.chart import Reference , BarChart
 wb = xl.load_workbook('transaction.xlsx')
 sheet = wb['Sheet1']
 
@@ -19,4 +20,8 @@ for i in range(2 , sheet.max_row+1):
     corrected_price_cell = sheet.cell(i , 4)
     corrected_price_cell.value = correct_price
 
-wb.save('transaction2.xlsx')
+values = Reference(sheet , min_row=2 , max_row=4 , min_col=4 ,max_col=4)
+chart = BarChart()
+chart.add_data(values)
+sheet.add_chart(chart , 'j2')
+wb.save('transactionSheet_with_barChart.xlsx')
